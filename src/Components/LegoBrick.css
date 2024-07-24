@@ -1,0 +1,92 @@
+/** Lego Brick ratio: 6 height/5 width per stud, each stud is 3 in diameter **/
+/** Cubes marked in Rubix Cube Notation, F - Front, R - Right, B - Back, L - Left, U - Up, D - Down **/
+
+.brick {
+  position: relative;
+  transform-style: preserve-3d;
+  /* transform: rotateX(-25deg) translateZ(-100px) rotateY(45deg); */
+  transform: translateZ(-50px);
+}
+
+.brick-pers {
+  /* Regular Orientation*/
+  transform: translateZ(-50px) rotateX(-25deg) rotateY(-45deg);
+
+  /*Top View*/
+  /* transform: translateZ(-100px) rotateX(-90deg); */
+
+  /* Tilted Forward View*/
+  /* transform: translateZ(-50px) rotateX(-45deg); */
+}
+
+.brick-face {
+  border: 1px solid var(--lego-border);
+  line-height: var(--tower-width);
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  position: absolute;
+}
+
+/** Making each 1x1 brick 60px tall, 50px width, so 30px per diameter stud  **/
+/** So a standard 2x4 brick is 60px tall and 200px wide, may have to half this **/
+* {
+  --lego-blue: #006bb7;
+  --lego-green: #9ac93b;
+  --lego-red: #dd1a21;
+  --lego-brown: #692e14;
+  --lego-border: #353535;
+}
+
+.tower-F::before {
+  /* content: "";
+  position: absolute;
+  inset: -5px; 
+  z-index: -1; 
+  background: linear-gradient(65deg, rgb(0, 0, 0, 0.4), rgb(0, 0, 0, 0));
+  filter: blur(10px); */
+}
+
+.stud {
+  /* position: relative;
+  transform-style: preserve-3d;
+  transform: translateZ(-100px) rotateX(-25deg);
+  transform: translateZ(-100px) rotateX(-90deg);
+  z-index: 10; */
+}
+
+.stud-U {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  background-color: var(--lego-red);
+  border: 1px solid var(--lego-border);
+  border-radius: 50%;
+  transform: rotateX(90deg);
+  z-index: 10;
+}
+
+.stud-R {
+  height: 10px;
+  width: 30px;
+  position: absolute;
+  background-color: var(--lego-red);
+  border-left: 1px solid var(--lego-border);
+  border-right: 1px solid var(--lego-border);
+  z-index: -1;
+  transform: rotateY(45deg); /*! Needs to undo the brick rotation */
+  z-index: 10;
+}
+
+.stud-B {
+  height: 30px;
+  width: 30px;
+  /* top: 10px; */
+  position: absolute;
+  background-color: var(--lego-red);
+  border-radius: 50%;
+  border: 1px solid var(--lego-border);
+  transform: rotateX(90deg);
+  z-index: 10;
+}
