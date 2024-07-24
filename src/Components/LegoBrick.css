@@ -19,10 +19,6 @@
 /** Making each 1x1 brick 60px tall, 50px width, so 30px per diameter stud  **/
 /** So a standard 2x4 brick is 60px tall and 200px wide, may have to half this **/
 * {
-  --lego-blue: #006bb7;
-  --lego-green: #9ac93b;
-  --lego-red: #dd1a21;
-  --lego-brown: #692e14;
   --lego-border: #353535;
 }
 
@@ -40,14 +36,12 @@
   border: 1px solid var(--lego-border);
   border-radius: 50%;
   transform: rotateX(90deg);
-  z-index: 10;
 }
 
 .stud-R {
   position: absolute;
   border-left: 1px solid var(--lego-border);
   border-right: 1px solid var(--lego-border);
-  z-index: 10;
 }
 
 .stud-B {
@@ -55,5 +49,4 @@
   border-radius: 50%;
   border: 1px solid var(--lego-border);
   transform: rotateX(90deg);
-  z-index: 10;
 }
