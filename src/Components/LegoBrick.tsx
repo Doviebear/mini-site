@@ -1,5 +1,5 @@
 import "./LegoBrick.css";
-import { LegoColor } from "./LegoBrickConstants";
+import { LegoColor, Orientation } from "./LegoBrickConstants";
 
 const LEGO_GROWTH_FACTOR = 10;
 const LEGO_STUD_HEIGHT = 6;
@@ -10,12 +10,14 @@ interface LegoBrickProps {
   stud_width: number;
   stud_depth: number;
   color: LegoColor;
+  orientation: Orientation;
 }
 
 export default function LegoBrick({
   stud_width,
   stud_depth,
   color,
+  orientation,
 }: LegoBrickProps) {
   const width = stud_width * LEGO_GROWTH_FACTOR * LEGO_STUD_WIDTH;
   const depth = stud_depth * LEGO_GROWTH_FACTOR * LEGO_STUD_WIDTH;
@@ -28,23 +30,23 @@ export default function LegoBrick({
   //   console.log(stud_coord_array);
 
   //Formerly top positioning
-  const studZPosition = (x: number) =>
+  const studZPosition = (stud_depth_index: number) =>
     -depth / 2 + // Center stud on top edge
     (LEGO_STUD_WIDTH * LEGO_GROWTH_FACTOR) / 2 + // Move first stud to position
-    LEGO_STUD_WIDTH * LEGO_GROWTH_FACTOR * x; // Subsequent studs check coords
+    LEGO_STUD_WIDTH * LEGO_GROWTH_FACTOR * stud_depth_index; // Subsequent studs check coords
 
   //Formerly left positining
-  const studXPosition = (x: number) =>
+  const studXPosition = (stud_width_index: number) =>
     -diameter / 2 + // Center stud on left edge
     (LEGO_STUD_WIDTH * LEGO_GROWTH_FACTOR) / 2 + // Move first stud to position
-    LEGO_STUD_WIDTH * LEGO_GROWTH_FACTOR * x; // Subsequent studs check coords
+    LEGO_STUD_WIDTH * LEGO_GROWTH_FACTOR * stud_width_index; // Subsequent studs check coords
 
   return (
     <div>
       <div className="brick-position" style={{ position: "absolute" }}>
-        <div className="brick brick-pers">
+        <div className="brick" style={{ transform: orientation }}>
           <div
-            className="brick-F brick-face-F brick-face"
+            className="brick-F brick-face"
             style={{
               width: width,
               height: height,
@@ -53,7 +55,7 @@ export default function LegoBrick({
             }}
           ></div>
           <div
-            className="brick-R brick-face-R brick-face"
+            className="brick-R brick-face"
             style={{
               width: depth,
               height: height,
@@ -62,8 +64,19 @@ export default function LegoBrick({
               transform: `rotateY(90deg) translateZ(${width / 2}px)`,
             }}
           ></div>
+          {/* This can be removed if you flip the R face based on orientation */}
           <div
-            className="brick-U brick-face-U brick-face"
+            className="brick-L brick-face"
+            style={{
+              width: depth,
+              height: height,
+              background: color,
+              left: (-1 * (depth - width)) / 2, // Centering the left face
+              transform: `rotateY(-90deg) translateZ(${width / 2}px)`,
+            }}
+          ></div>
+          <div
+            className="brick-U brick-face"
             style={{
               width: width,
               height: depth,
@@ -82,36 +95,40 @@ export default function LegoBrick({
                 )}px) translateX(${studXPosition(x[1])}px)`,
                 zIndex: 10,
                 transformStyle: "preserve-3d",
-
-                // top:
-                //   -depth / 2 + // Center stud on top edge
-                //   (LEGO_STUD_WIDTH * LEGO_GROWTH_FACTOR) / 2 + // Move first stud to position
-                //   LEGO_STUD_WIDTH * LEGO_GROWTH_FACTOR * x[0], // Subsequent studs check coords
-                // left:
-                //   -diameter / 2 + // Center stud on left edge
-                //   (LEGO_STUD_WIDTH * LEGO_GROWTH_FACTOR) / 2 + // Move first stud to position
-                //   LEGO_STUD_WIDTH * LEGO_GROWTH_FACTOR * x[1], // Subsequent studs check coords
               }}
             >
               <div
                 className="stud-U"
-                style={{ top: (-1 * diameter) / 2 - 10, background: color }}
+                style={{
+                  top: (-1 * diameter) / 2 - 10,
+                  background: color,
+                  height: diameter,
+                  width: diameter,
+                }}
               ></div>
               <div
                 className="stud-R"
-                style={{ top: (-1 * diameter) / 2 + 5, background: color }}
+                style={{
+                  top: (-1 * diameter) / 2 + 5,
+                  background: color,
+                  height: diameter / 3,
+                  width: diameter,
+                  transform: `rotateY(${
+                    orientation === Orientation.FrontRight ? "-" : ""
+                  }45deg)`, //! A Hack job, if add orientation or change from 45deg, needs to change
+                }}
               ></div>
               <div
                 className="stud-B"
-                style={{ top: (-1 * diameter) / 2, background: color }}
+                style={{
+                  top: (-1 * diameter) / 2,
+                  background: color,
+                  height: diameter,
+                  width: diameter,
+                }}
               ></div>
             </div>
           ))}
-          {/* <div>
-            <div className="stud-U"></div>
-            <div className="stud-F"></div>
-            <div className="stud-B"></div>
-          </div> */}
         </div>
       </div>
     </div>

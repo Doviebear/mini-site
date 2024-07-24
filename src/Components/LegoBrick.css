@@ -4,19 +4,6 @@
 .brick {
   position: relative;
   transform-style: preserve-3d;
-  /* transform: rotateX(-25deg) translateZ(-100px) rotateY(45deg); */
-  transform: translateZ(-50px);
-}
-
-.brick-pers {
-  /* Regular Orientation*/
-  transform: translateZ(-50px) rotateX(-25deg) rotateY(-45deg);
-
-  /*Top View*/
-  /* transform: translateZ(-100px) rotateX(-90deg); */
-
-  /* Tilted Forward View*/
-  /* transform: translateZ(-50px) rotateX(-45deg); */
 }
 
 .brick-face {
@@ -48,19 +35,8 @@
   filter: blur(10px); */
 }
 
-.stud {
-  /* position: relative;
-  transform-style: preserve-3d;
-  transform: translateZ(-100px) rotateX(-25deg);
-  transform: translateZ(-100px) rotateX(-90deg);
-  z-index: 10; */
-}
-
 .stud-U {
-  height: 30px;
-  width: 30px;
   position: absolute;
-  background-color: var(--lego-red);
   border: 1px solid var(--lego-border);
   border-radius: 50%;
   transform: rotateX(90deg);
@@ -68,23 +44,14 @@
 }
 
 .stud-R {
-  height: 10px;
-  width: 30px;
   position: absolute;
-  background-color: var(--lego-red);
   border-left: 1px solid var(--lego-border);
   border-right: 1px solid var(--lego-border);
-  z-index: -1;
-  transform: rotateY(45deg); /*! Needs to undo the brick rotation */
   z-index: 10;
 }
 
 .stud-B {
-  height: 30px;
-  width: 30px;
-  /* top: 10px; */
   position: absolute;
-  background-color: var(--lego-red);
   border-radius: 50%;
   border: 1px solid var(--lego-border);
   transform: rotateX(90deg);
